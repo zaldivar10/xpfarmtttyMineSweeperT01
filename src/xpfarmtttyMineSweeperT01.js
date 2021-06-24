@@ -1,5 +1,5 @@
 function mineSweeper01() {
-    let gameMessage = "BOOM! – Game Over."
+    let gameMessage = "1) BOOM! – Game Over."
 
     return gameMessage;
 } 
