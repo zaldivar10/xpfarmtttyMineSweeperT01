@@ -1,0 +1,25 @@
+{
+  "name": "xpfarmtttyminesweepert01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaldivar10/xpfarmtttyMineSweeperT01.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaldivar10/xpfarmtttyMineSweeperT01/issues"
+  },
+  "homepage": "https://github.com/zaldivar10/xpfarmtttyMineSweeperT01#readme",
+  "devDependencies": {
+    "jest": "^27.0.5"
+  }
+}
