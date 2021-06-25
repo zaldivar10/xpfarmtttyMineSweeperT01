@@ -7,7 +7,23 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "test": "jest --verbose",
+    "test-coverage": "jest --collectCoverage",
+    "sonar": "node sonar-project.js"
+
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
+  "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "test-reporter.xml",
+    "indent": 4
   },
   "repository": {
     "type": "git",
@@ -20,6 +36,8 @@
   },
   "homepage": "https://github.com/zaldivar10/xpfarmtttyMineSweeperT01#readme",
   "devDependencies": {
-    "jest": "^27.0.5"
+    "jest": "^27.0.5",
+    "jest-sonar-reporter": "^2.0.0",
+    "sonarqube-scanner": "^2.8.1"
   }
 }
