@@ -9,5 +9,5 @@ addons:
       secure: "31a2d936e7531177f36d56874241d522cbc4a47e" # encrypted value of your token
 script:
   # other script steps might be done before running the actual analysis
-  - sonar-scanner
+  - sonar-scanner sonar.login = MYSONARQUBE
   
