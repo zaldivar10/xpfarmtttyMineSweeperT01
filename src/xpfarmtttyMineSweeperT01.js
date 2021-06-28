@@ -1,8 +1,33 @@
-function mineSweeper01() {
-    let gameMessage = "BOOM! – Game Over."
 
-    return gameMessage;
+const GAMEOVER_MESSAGE = "BOOM! – Game Over."
+const VICTORY_MESSAGE = "the land is cleared! GOOD JOB!"
+function mineSweeper01(definedGameBoard, currentGameBoard, selectedSquares, markBomb) {
+    const NUMBER_BOMBS_IN_GAME = countNumberOfBoms(definedGameBoard);
+    let numberSquaresToOpen = 9;
+    selectedSquares = selectedSquares.split(' + ');
+    numberSquaresToOpen = numberSquaresToOpen - NUMBER_BOMBS_IN_GAME;
+
+    for (let i = 0; i < selectedSquares.length; i++) {
+        currentGameBoard[captureSquareSelection(selectedSquares[i])] = displaySquareValue(definedGameBoard, selectedSquares[i], markBomb);
+        if (!checkGameOver(currentGameBoard[captureSquareSelection(selectedSquares[i])])){
+            numberSquaresToOpen = numberSquaresToOpen - 1;
+        } 
+        else{
+            displayGameBoard(currentGameBoard, GAMEOVER_MESSAGE);
+            return GAMEOVER_MESSAGE;
+        }
+    }
+    //displayGameBoard(currentGameBoard,"test");
+    return (checkVictory(currentGameBoard, numberSquaresToOpen)) ? VICTORY_MESSAGE : currentGameBoard;
 } 
+
+function countNumberOfBoms(definedGameBoard) {
+    let numberBombsInGame = 0;
+    definedGameBoard.forEach(element => { if (element == "X") numberBombsInGame ++;      
+    });
+    return numberBombsInGame;
+}
+
 function captureSquareSelection(squareSelection) {
     const MAP_SQUARE_SELECTION_TO_BOARD = {
           '0;0' : 36,
@@ -19,13 +44,18 @@ function captureSquareSelection(squareSelection) {
     return MAP_SQUARE_SELECTION_TO_BOARD[squareSelection];
 }
 
-function displaySquareValue(gameBoard, squareSelection) {
+function displaySquareValue(gameBoard, squareSelection, markBomb, unitTest) {
     let squarePosition = captureSquareSelection(squareSelection);
-    const NUMBER_OF_BOMBS = ["1", "2", "3"];
 
-    if (NUMBER_OF_BOMBS.includes(gameBoard[squarePosition]))
-        console.log(gameBoard[squarePosition]," bombs around your square.")
-    return gameBoard[squarePosition];
+    displayUnitTestMessages(gameBoard, squarePosition, markBomb, unitTest);
+    return (markBomb) ? "*" : gameBoard[squarePosition];
+}
+
+function displayUnitTestMessages (gameBoard, squarePosition, markBomb, unitTest){
+    if (unitTest){
+        markBomb ? displayGameBoard(gameBoard, "Square flagged as bomb")
+        : displayGameBoard(gameBoard, gameBoard[squarePosition] + " bombs around your square.");
+    }
 }
 
 function createGameBoard() {
@@ -36,25 +66,41 @@ function createGameBoard() {
     '+','-','+','-','+','-','+', 
     '|',' ','|',' ','|',' ','|',
     '+','-','+','-','+','-','+'];
-    console.log(gameBoard, "[Sandbox 3x3] Game created");
+    displayGameBoard(gameBoard, "[Sandbox 3x3] Game created");
     return gameBoard;
 }
 
-function isGameOver(gameBoard, squareSelection){
-    let gameMessage = "BOOM! – Game Over."
+function checkGameOver(squareValue){
+    return squareValue == "X" ? true : false;
+}
 
-    if (displaySquareValue(gameBoard, squareSelection) == "X"){
-        console.log(gameMessage)
+function checkVictory (currentGameBoard, numberSquaresToOpen){
+    if (numberSquaresToOpen == 0){
+        displayGameBoard(currentGameBoard, VICTORY_MESSAGE);
         return true;
     }
-    else
-    {
+    else{
         return false;
     }
+}
+
+function displayGameBoard(gameBoard, message){
+    let rowsOfGameBoard = [];
+    let rowOfGameBoard = "";
+    let j = 0;
+    for(let i = 1; i <= gameBoard.length; i++){
+        rowOfGameBoard += gameBoard[i-1];
+        if (i % 7 == 0){
+            rowsOfGameBoard[j] = rowOfGameBoard;
+            j += 1;
+            rowOfGameBoard = "";
+        }
+    }
+    console.log(rowsOfGameBoard, message);
 }
 
 module.exports.createGameBoard = createGameBoard
 module.exports.mineSweeper01 = mineSweeper01
 module.exports.captureSquareSelection = captureSquareSelection
 module.exports.displaySquareValue = displaySquareValue
-module.exports.isGameOver = isGameOver
+module.exports.isGameOver = checkGameOver
