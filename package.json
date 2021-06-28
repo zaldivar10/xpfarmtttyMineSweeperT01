@@ -25,7 +25,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -g commitlint.config.js -e",
+      "pre-commit": "npm run coverage && npm run lint"
     }
   },
   "repository": {
